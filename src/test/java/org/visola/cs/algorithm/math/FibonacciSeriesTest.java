@@ -1,25 +1,25 @@
 package org.visola.cs.algorithm.math;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ServiceLoader;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
 public class FibonacciSeriesTest {
 
-  private static final Class<? extends FibonacciSeries> [] ALL_IMPLEMENTATIONS = new Class [] {
-    IterativeFibonacciSeries.class
-  };
-
   private List<FibonacciSeries> allSeries = new ArrayList<>();
 
   @Before
   public void setup() throws Exception {
-    for (Class<? extends FibonacciSeries> c : ALL_IMPLEMENTATIONS) {
-      allSeries.add(c.newInstance());
+    for (Iterator<FibonacciSeries> iterator = ServiceLoader.load(FibonacciSeries.class).iterator(); iterator.hasNext();) {
+      allSeries.add(iterator.next());
     }
+    assertTrue("At least one implementation is provided.", allSeries.size() > 0);
   }
 
   @Test
