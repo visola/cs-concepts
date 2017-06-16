@@ -1,4 +1,4 @@
-package org.visola.cs.algorithms.math;
+package org.visola.cs.algorithm.math;
 
 /**
  * Operations that can be done with a Fibonacci series.

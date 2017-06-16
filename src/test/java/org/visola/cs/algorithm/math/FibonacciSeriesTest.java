@@ -1,4 +1,4 @@
-package org.visola.cs.algorithms.math;
+package org.visola.cs.algorithm.math;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.visola.cs.algorithms.math;
+package org.visola.cs.algorithm.math;
 
 /**
  * Implementation of the Fibonacci Series using iterative algorithms and no
