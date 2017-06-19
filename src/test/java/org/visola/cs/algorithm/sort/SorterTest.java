@@ -62,6 +62,7 @@ public class SorterTest {
     }
   }
 
+  @SuppressWarnings("unchecked")
   private void sort(Sorter sorter, List<Integer> toSort) {
     Collections2.reset();
     sorter.sort(toSort);
