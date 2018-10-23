@@ -4,25 +4,28 @@ public class CircularQueue<T> implements Queue<T> {
 
   private final Object[] items;
 
-  private int head = -1;
-  private int tail = -1;
+  private int headIndex = -1;
+  private int tailIndex = -1;
 
   public CircularQueue(int size) {
+    if (size <= 0) {
+      throw new IllegalArgumentException("Size must be greater than zero, was: " + size);
+    }
     this.items = new Object[size];
   }
 
   @Override
   public boolean enQueue(T value) {
-    int newPos = nextPos(tail);
-    if (newPos == head) {
+    int newPos = nextPos(tailIndex);
+    if (newPos == headIndex) {
       return false;
     }
 
-    tail = newPos;
-    items[tail] = value;
+    tailIndex = newPos;
+    items[tailIndex] = value;
 
-    if (head == -1) {
-      head = tail;
+    if (headIndex == -1) {
+      headIndex = tailIndex;
     }
 
     return true;
@@ -34,13 +37,13 @@ public class CircularQueue<T> implements Queue<T> {
       return false;
     }
 
-    items[head] = null;
-    head = nextPos(head);
+    items[headIndex] = null;
+    headIndex = nextPos(headIndex);
 
-    int nextTail = nextPos(tail);
-    if (head == nextTail) {
-      head = -1;
-      tail = -1;
+    int nextTailIndex = nextPos(tailIndex);
+    if (headIndex == nextTailIndex) {
+      headIndex = -1;
+      tailIndex = -1;
       // Queue is now empty
       return true;
     }
@@ -54,7 +57,7 @@ public class CircularQueue<T> implements Queue<T> {
     if (isEmpty()) {
       return null;
     }
-    return (T) items[head];
+    return (T) items[headIndex];
   }
 
   @Override
@@ -63,25 +66,21 @@ public class CircularQueue<T> implements Queue<T> {
     if (isEmpty()) {
       return null;
     }
-    return (T) items[tail];
+    return (T) items[tailIndex];
   }
 
   @Override
   public boolean isEmpty() {
-    return head == -1 && tail == -1;
+    return headIndex == -1 && tailIndex == -1;
   }
 
   @Override
   public boolean isFull() {
-    return nextPos(tail) == head;
+    return nextPos(tailIndex) == headIndex;
   }
 
   private int nextPos(int curPos) {
-    int nextPos = curPos + 1;
-    if (nextPos == items.length) {
-      return 0;
-    }
-    return nextPos;
+    return (curPos + 1) % items.length;
   }
 
 }
